@@ -75,11 +75,11 @@ up — both point you to their manual steps, and the guides below have the full 
 
 ## Pick your assistant
 
-| Assistant | Guide | One-step setup? |
-|-----------|-------|-----------------|
-| **Claude** (Code, claude.ai, Desktop) | [claude/README.md](claude/README.md) | ✅ One install in Claude Code — the app adds one click (plugin → Connectors → Install) |
-| **OpenAI** (ChatGPT & Codex — one app) | [openai/README.md](openai/README.md) | ✅ One plugin install in the ChatGPT desktop app or Codex CLI — web adds the Skill + MCP server in two steps |
-| **Google** (Antigravity CLI) | [google/README.md](google/README.md) | ✅ Antigravity plugin |
+| Assistant | Guide | One-step setup? | Draws cards? |
+|-----------|-------|-----------------|--------------|
+| **Claude** (Code, claude.ai, Desktop) | [claude/README.md](claude/README.md) | ✅ One install in Claude Code — the app adds one click (plugin → Connectors → Install) | ✅ claude.ai and Desktop — Claude Code is text only |
+| **OpenAI** (ChatGPT & Codex — one app) | [openai/README.md](openai/README.md) | ✅ One plugin install in the ChatGPT desktop app or Codex CLI — web adds the Skill + MCP server in two steps | ✅ ChatGPT on the web and desktop — Codex CLI is text only |
+| **Google** (Antigravity CLI) | [google/README.md](google/README.md) | ✅ Antigravity plugin | Text only |
 
 ## Every setup has two parts — you need both
 
@@ -103,6 +103,12 @@ Once set up, the assistant will:
 - **Offer to capture** — a brief, non-blocking suggestion, never interrupting your flow.
 - **Build a structured matrix** — options, criteria, scores, and weights, extracted from
   what you actually said.
+- **Show each step as a card** — where the assistant can draw them (Claude on claude.ai
+  and Desktop, ChatGPT on the web and desktop), the draft, the matrix, each criterion to
+  score, the analysis, a round's ask and what changed since you last looked appear as cards
+  in the chat. Tap a value to score it, choose an option, or submit your round scores
+  without leaving the conversation. Claude Code, Codex CLI, and Antigravity CLI show the
+  same steps as text.
 - **Track provenance** — every value links back to its source, with confidence levels
   and citations.
 

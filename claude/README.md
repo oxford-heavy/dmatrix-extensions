@@ -3,11 +3,15 @@
 Set up dMatrix decision-capture in any Claude product. Pick the row that matches
 how you use Claude:
 
-| You use… | Jump to | One install or two steps? |
-|----------|---------|---------------------------|
-| **Claude Code** (terminal / IDE) | [Claude Code](#claude-code) | **One** — the plugin bundles everything |
-| **claude.ai** or **Claude Desktop** (the app) | [The Claude app](#the-claude-app-claudeai-and-desktop) | **Two** — install the plugin, then its connector |
-| Claude Code, but no marketplace | [Standalone skill](#standalone-skill-advanced) | Two steps |
+| You use… | Jump to | One install or two steps? | Draws cards? |
+|----------|---------|---------------------------|--------------|
+| **Claude Code** (terminal / IDE) | [Claude Code](#claude-code) | **One** — the plugin bundles everything | Text only |
+| **claude.ai** or **Claude Desktop** (the app) | [The Claude app](#the-claude-app-claudeai-and-desktop) | **Two** — install the plugin, then its connector | ✅ Yes |
+| Claude Code, but no marketplace | [Standalone skill](#standalone-skill-advanced) | Two steps | Text only |
+
+In claude.ai and Claude Desktop, dMatrix shows each step as a card in the chat — the draft,
+the matrix, each criterion to score, the analysis — where you tap to score, choose, or
+submit a round's scores. Claude Code gets the same steps as text.
 
 ## What you're setting up — two parts, both required
 

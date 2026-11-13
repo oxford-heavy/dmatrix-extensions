@@ -7,10 +7,14 @@ reads that same plugin system. So on the desktop app and the CLI, dMatrix is a *
 plugin install**. The ChatGPT **website** keeps its own point-and-click setup, where you
 add the two pieces individually.
 
-| You're using… | Setup | Jump to |
-|---------------|-------|---------|
-| **ChatGPT desktop app** (Chat / Work / Codex) or the **Codex CLI / IDE** | ✅ One install — the dMatrix plugin bundles both pieces | [Install the plugin](#install-the-plugin) |
-| **ChatGPT on the web** (chatgpt.com) | Two quick steps — add the **Skill**, then the **MCP server** | [ChatGPT web setup](#chatgpt-on-the-web) |
+| You're using… | Setup | Jump to | Draws cards? |
+|---------------|-------|---------|--------------|
+| **ChatGPT desktop app** (Chat / Work / Codex) or the **Codex CLI / IDE** | ✅ One install — the dMatrix plugin bundles both pieces | [Install the plugin](#install-the-plugin) | ✅ The desktop app — the Codex CLI and IDE are text only |
+| **ChatGPT on the web** (chatgpt.com) | Two quick steps — add the **Skill**, then the **MCP server** | [ChatGPT web setup](#chatgpt-on-the-web) | ✅ Yes |
+
+In ChatGPT on the web and the desktop app, dMatrix shows each step as a card in the chat —
+the draft, the matrix, each criterion to score, the analysis — where you tap to score,
+choose, or submit a round's scores. The Codex CLI and IDE get the same steps as text.
 
 Either way you're setting up the same two parts:
 

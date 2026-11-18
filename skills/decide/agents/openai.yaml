@@ -8,9 +8,4 @@ interface:
   brand_color: "#3B82F6"
   default_prompt: Help me weigh my options and capture the decision in dMatrix
 policy:
-  products:
-    - chatgpt
-    - codex
-    - api
-    - atlas
   allow_implicit_invocation: true

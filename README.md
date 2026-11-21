@@ -4,173 +4,79 @@
 
 # dMatrix Extensions
 
-Bring dMatrix **decision-capture** to your favorite AI assistant. dMatrix notices when
-you're weighing alternatives, evaluating trade-offs, or making a decision — and offers
-to capture it as a structured, auditable decision matrix.
+Bring dMatrix **decision capture** to your AI assistant. dMatrix notices when you're weighing
+alternatives or trade-offs and offers to capture the decision as a structured, auditable decision
+matrix.
 
-## One-step install
+You need a free dMatrix account: sign up at [dmatrix.com](https://dmatrix.com).
 
-One command installs dMatrix into every AI client on your machine — Claude Code, Codex CLI
-(which also covers the ChatGPT desktop app), and Antigravity CLI — and prints what it did
-for each. Re-run it any time to update every copy.
+## How it connects
 
-**macOS and Linux**
+dMatrix connects once, on your account, wherever your assistant has one. Pick the row that matches
+where you work:
 
-```sh
-curl -fsSL https://raw.githubusercontent.com/oxford-heavy/dmatrix-extensions/main/install.sh | sh
-```
+| Where you work                                                                           | The connection (once)                                           | The behavior                                     | Guide                                                  |
+| ---------------------------------------------------------------------------------------- | --------------------------------------------------------------- | ------------------------------------------------ | ------------------------------------------------------ |
+| Claude: claude.ai, the desktop app's Chat and Code tabs, Claude Code on a Claude account | dMatrix added as a connector on your Claude account, by address | The dMatrix plugin, which carries only the Skill | [claude/README.md](claude/README.md)                   |
+| ChatGPT: the website and the desktop app; Codex signed in with ChatGPT                   | dMatrix added on chatgpt.com                                    | The Skill, uploaded on chatgpt.com               | [openai/README.md](openai/README.md)                   |
+| A terminal client with no account connection (Claude Code or Codex on an API key)        | One command adds the server                                     | Claude Code: the plugin. Codex: acts when asked  | [claude](claude/README.md), [openai](openai/README.md) |
+| Antigravity CLI                                                                          | Its own bundle, which carries the connection                    | The same bundle                                  | [google/README.md](google/README.md)                   |
 
-Want to see what it would do first? Add `-s -- --dry-run`. Other options: `--only
-claude|codex|agy`, `--ref <branch-or-tag>`, `--uninstall`. It needs no `sudo` and writes
-only inside the clients' own homes.
+Every connection points at the same address, `https://mcp.dmatrix.com/mcp`. Connect each client
+one way only: a client that has dMatrix both on the account and by command loads it twice.
 
-**Windows** (PowerShell 5.1 or 7 — no WSL)
+## Two parts, both needed
 
-```powershell
-irm https://raw.githubusercontent.com/oxford-heavy/dmatrix-extensions/main/install.ps1 | iex
-```
+1. **The connection** — dMatrix's tools, so the assistant can create and save your matrices.
+2. **The Skill** — the behavior: when to offer a capture, and how to draw out options, criteria
+   and scores.
 
-Piping into `iex` can't pass parameters, so the options come from environment variables
-instead — `$env:DMATRIX_DRY_RUN = 1` before the pipe, and likewise `DMATRIX_ONLY`,
-`DMATRIX_REF`, `DMATRIX_UNINSTALL`. Save the file and run it directly and the same options
-work as `-DryRun`, `-Only`, `-Ref`, `-Uninstall`. No elevation needed.
+With only the Skill, the assistant can talk your decision through but can't create or save
+anything in dMatrix, so it ends up offering help it can't deliver. With only the connection, it
+has the tools but doesn't know when to offer them. Each guide sets up both.
 
-### No terminal? Download the installer
+## Cards or text
 
-The installers on the [latest release](https://github.com/oxford-heavy/dmatrix-extensions/releases/latest)
-are the one-step script in package form: same steps, same daily check that keeps the
-plugin current, started with a double-click.
+Claude (claude.ai and the desktop app) and ChatGPT (the website and the desktop app) show each step
+as a card in the chat — the draft, the matrix, each criterion to score, the analysis — where you tap
+to score, choose an option, or submit a round's scores. Claude Code in a terminal, Codex in a
+terminal and Antigravity CLI show the same steps as text.
 
-| | macOS | Windows |
-|---|---|---|
-| **Download** | [dmatrix-extensions.pkg](https://github.com/oxford-heavy/dmatrix-extensions/releases/latest/download/dmatrix-extensions.pkg) | [dmatrix-extensions.msi](https://github.com/oxford-heavy/dmatrix-extensions/releases/latest/download/dmatrix-extensions.msi) |
-| **Admin rights** | Asks for your password once, to install into `/Library/Application Support/dMatrix` | None — installs for your account only, into `%LOCALAPPDATA%\dMatrix` |
-| **What it set up** | A notification lists the clients, and the full result is in `/Library/Application Support/dMatrix/install.log` | Tick **Show what was set up** on the last screen to open `install.log` |
-| **Update** | Automatic, through the daily check; a newer download installs over it | Automatic, through the daily check; a newer download installs over it |
-| **Remove** | Run the three commands below | Uninstall **dMatrix Decision Capture** from **Settings → Apps** — it takes the plugin out of every client and the daily check with it |
-
-> **These builds are unsigned for now**, so the first launch is blocked once. On macOS,
-> open **System Settings → Privacy & Security** and click **Open Anyway** next to the note
-> about dmatrix-extensions.pkg. On Windows, click **More info → Run anyway** on the
-> SmartScreen prompt. The install commands above never hit either prompt.
-
-To remove everything the macOS package installed, run these in Terminal. The first is
-deliberately not `sudo` — the plugin and the daily check live in your account:
-
-```sh
-"/Library/Application Support/dMatrix/install.sh" --uninstall
-sudo pkgutil --forget com.dmatrix.extensions
-sudo rm -rf "/Library/Application Support/dMatrix"
-```
-
-Each release also publishes `SHA256SUMS.txt`; check a download against it with
-`shasum -a 256 dmatrix-extensions.pkg` or
-`Get-FileHash dmatrix-extensions.msi -Algorithm SHA256`.
-
-### Clients that live in your account
-
-The Claude app (including Cowork), claude.ai, and ChatGPT on the web install against your
-account rather than your machine, so neither the script nor the installers can set them
-up — both point you to their manual steps, and the guides below have the full walkthrough.
-
-## Pick your assistant
-
-| Assistant | Guide | One-step setup? | Draws cards? |
-|-----------|-------|-----------------|--------------|
-| **Claude** (Code, claude.ai, Desktop) | [claude/README.md](claude/README.md) | ✅ One install in Claude Code — the app adds one click (plugin → Connectors → Install) | ✅ claude.ai and Desktop — Claude Code is text only |
-| **OpenAI** (ChatGPT & Codex — one app) | [openai/README.md](openai/README.md) | ✅ One plugin install in the ChatGPT desktop app or Codex CLI — web adds the Skill + MCP server in two steps | ✅ ChatGPT on the web and desktop — Codex CLI is text only |
-| **Google** (Antigravity CLI) | [google/README.md](google/README.md) | ✅ Antigravity plugin | Text only |
-
-## Every setup has two parts — you need both
-
-1. **The behavior** — instructions that teach the assistant *how* to capture a decision
-   (when to offer, how to draw out options, criteria, and scores).
-2. **The connection to dMatrix** — linking the assistant to your dMatrix account so it
-   can actually create and save your decision matrix.
-
-> **Both parts are required.** With only the behavior, the assistant can talk about your
-> decision but can't create or save anything in dMatrix — so it ends up offering help it
-> can't deliver. Always set up both. Some assistants do it in one step; others take two.
-> Each guide walks you through it. You'll need a free dMatrix account — sign up at
-> [dmatrix.com](https://dmatrix.com).
-
-## What you get
-
-Once set up, the assistant will:
-
-- **Detect decision signals** — comparative evaluation, trade-off language, criteria-based
-  reasoning, explicit "help me decide" framing.
-- **Offer to capture** — a brief, non-blocking suggestion, never interrupting your flow.
-- **Build a structured matrix** — options, criteria, scores, and weights, extracted from
-  what you actually said.
-- **Show each step as a card** — where the assistant can draw them (Claude on claude.ai
-  and Desktop, ChatGPT on the web and desktop), the draft, the matrix, each criterion to
-  score, the analysis, a round's ask and what changed since you last looked appear as cards
-  in the chat. Tap a value to score it, choose an option, or submit your round scores
-  without leaving the conversation. Claude Code, Codex CLI, and Antigravity CLI show the
-  same steps as text.
-- **Track provenance** — every value links back to its source, with confidence levels
-  and citations.
-
-Detection stays conservative — dMatrix only offers to capture on a clear decision signal,
-and never interrupts.
-
-### You can always ask
-
-You don't have to wait for the assistant to notice a decision. At any point, type:
+## What is in this repository
 
 ```
-/dmatrix:decide
+.claude-plugin/marketplace.json            # The marketplace; its one plugin is claude/dmatrix
+.github/workflows/release.yml              # Publishes decide.zip and its checksum on a release tag
+.gitignore · LICENSE · README.md           # This repository's own files
+assets/                                    # Brand logos and chatgpt.com's icon, used by the guides
+claude/README.md                           # Claude guide
+claude/dmatrix/                            # The Claude plugin: its manifest and the Skill
+google/README.md                           # Google guide
+google/antigravity/dmatrix/                # The Antigravity bundle: the Skill and its connection
+openai/README.md                           # OpenAI guide
+openai/paste-in/dmatrix.md                 # The behavior to paste into a ChatGPT Project
+openai/codex/AGENTS.md                     # The same text, as AGENTS.md for terminal Codex
+shared/canonical-prompt/source.md          # The canonical behavior every Skill carries
+skills/decide/                             # The Skill as ChatGPT's upload takes it (decide.zip)
 ```
 
-This works in Claude Code, Codex CLI, and Antigravity CLI. It tells the assistant to
-capture a decision right now — even if you're mid-conversation, or looking back at a
-decision you already made. The assistant will review what you've discussed and build a
-matrix from it.
+## How it is built
 
-Use it when:
-
-- You realize a past conversation contained a decision worth capturing.
-- You want to structure a decision you're actively working through.
-- The assistant didn't offer on its own and you'd like it to.
-
-## Repository structure
-
-```
-install.sh · install.ps1            # One-step installers (macOS/Linux, Windows) — see above
-installers/                         # Native installer sources (.pkg, .msi) — each wraps the matching script
-.github/workflows/release.yml       # Builds both installers and publishes them on a release tag
-shared/canonical-prompt/source.md   # The single source of truth (canonical behavior)
-.claude-plugin/ · .codex-plugin/    # Claude + ChatGPT/Codex plugin manifests; self-vending marketplace
-.mcp.json                           # Shared MCP wiring (one file, both plugins)
-                                    # (this repo is its own single-plugin marketplace: source "./")
-skills/decide/SKILL.md              # The dMatrix Skill (Claude & Codex plugins / standalone)
-claude/README.md                    # Claude install guide (all surfaces)
-openai/                             # ChatGPT web paste-in + manual Codex fallbacks (AGENTS.md, config.toml)
-google/antigravity/dmatrix/         # Antigravity CLI plugin bundle
-mcp/connectors/                     # Host-agnostic MCP connector reference
-assets/                             # Brand logos (dM tile) — emitted by the renderer, used by the plugin manifests + this README
-```
-
-## How it works
-
-Every behavior-bearing artifact is **generated from one source**,
-`shared/canonical-prompt/source.md`, by the renderer pipeline in the dMatrix monorepo
-(`packages/canonical-prompt`). The pipeline injects the canonical body **verbatim** into
-each surface — only the per-provider wrapper differs — and stamps a content hash
-(`version_hash`) so every artifact stays provably in sync. To re-sync after the canonical
-prompt changes, the pipeline regenerates this whole repo in one run; the artifacts here
-are not edited by hand.
+Everything here is generated from the dMatrix repository by its renderer
+(`packages/canonical-prompt`): the plugin, the bundle, the Skill and these guides. The canonical
+behavior is injected verbatim into each surface and stamped with a content hash (`version_hash`)
+so every copy stays provably in sync. Do not edit files here; a change made here is overwritten by
+the next render.
 
 ## License
 
-Copyright © 2026 Oxford Heavy Industries, LLC. All rights reserved. dMatrix is a product
-of Lockstride, a division of Oxford Heavy Industries, LLC.
+Copyright © 2026 Oxford Heavy Industries, LLC. All rights reserved. dMatrix is a product of
+Lockstride, a division of Oxford Heavy Industries, LLC.
 
-These extensions are **free to install and use** with your own dMatrix account. They are
-not open source: copying, redistribution, modification, and derivative works are not
-permitted, and the dMatrix name, logos, and icons are trademarks that this license does
-not grant any right to use. See [LICENSE](LICENSE) for the full terms.
+These extensions are **free to use** with your own dMatrix account. They are not open source:
+copying, redistribution, modification, and derivative works are not permitted, and the dMatrix
+name, logos, and icons are trademarks that this license does not grant any right to use. See
+[LICENSE](LICENSE) for the full terms.
 
 ## Support
 

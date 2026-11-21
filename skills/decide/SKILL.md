@@ -2,8 +2,8 @@
 name: decide
 description: "dMatrix decision-capture mode. Trigger whenever the conversation is decision-shaped — the user is choosing between alternatives, weighing trade-offs, evaluating options against criteria, or asking for a recommendation ('what should we use for X', 'which vendor/tool/platform', 'recommend something for…') — even if they never mention dMatrix, a matrix, or capture. On load, follow the canonical guidance: offer capture with one brief suggestion, wait for go-ahead, never auto-populate. Also trigger when the person asks for help with a dMatrix round they're asked in: read the ask with get_round_ask and a cell's context with get_round_cell_context, save drafts with save_round_drafts, suggest with suggest_item. Never submit; submitting is the person's. Also runs as /decide."
 argument-hint: "[matrix URL | id | name — optional: attach an existing Matrix]"
-version_hash: f4a192af5d4f0ff9
-plugin_version: 1.2.0
+version_hash: 408e3c04e7f385be
+plugin_version: 2.0.0
 ---
 
 ## Attaching a Matrix on invocation
@@ -15,7 +15,7 @@ plugin_version: 1.2.0
 
 Argument: $ARGUMENTS
 
-<!-- dmatrix-canonical-core v:f4a192af5d4f0ff9 -->
+<!-- dmatrix-canonical-core v:408e3c04e7f385be -->
 # dMatrix decision mode
 
 dMatrix captures choices in a structured, auditable Matrix: Options, Criteria, weights, scores, provenance, and support. Tool schemas are the source of truth.
@@ -28,9 +28,9 @@ Speak plainly and stay decision-focused; handle administrative and technical pro
 
 On first activation, briefly say what dMatrix is and how the capture will proceed, then say you're checking access.
 
-**No dMatrix tools at all means setup, not outage:** relay the fix **verbatim**. Claude app (claude.ai, Desktop): Customize → Plugins → dMatrix Decision Capture → Connectors tab → Install, then sign in. Other clients: the install guide at github.com/oxford-heavy/dmatrix-extensions. Help in plain chat until connected.
+**No dMatrix tools at all means setup, not outage:** relay this fix **verbatim**: "Set up dMatrix in your AI app at https://app.dmatrix.com/ai-app-setup." Help in plain chat until connected.
 
-**A sign-in challenge is recoverable:** open any sign-in URL a tool hands you (`open <url>`) rather than pasting it, and poll `<origin>/oauth/authorization-status?state=<state>` until it returns `approved`. If the client reports the server needs authentication (Claude Code: `/mcp` → `dmatrix` → Authenticate), send the user there.
+**A sign-in challenge is recoverable:** open any sign-in URL a tool hands you (`open <url>`) rather than pasting it, and poll `<origin>/oauth/authorization-status?state=<state>` until it returns `approved`. If the client reports dMatrix needs authentication, tell the user to reconnect dMatrix where they connected it.
 
 **An unreachable server is not recoverable:** say dMatrix is down and stop.
 

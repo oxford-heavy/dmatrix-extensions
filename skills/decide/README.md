@@ -1,19 +1,19 @@
 # dMatrix Decision Capture — Skill
 
-This folder is the dMatrix decision-capture **Skill** ([`SKILL.md`](SKILL.md)). It is the
-behavior half of the integration only — on its own it cannot create or save anything in
-dMatrix. A working setup also needs the connection to dMatrix (the MCP server at
-`https://mcp.dmatrix.com/mcp`); install **both** via one of the methods below.
+This folder is the dMatrix decision-capture **Skill** ([`SKILL.md`](SKILL.md)) in the shape
+ChatGPT's Skill upload takes it. Every release publishes it as `decide.zip`: the `decide/` folder
+at the top of the archive, without this README. Download it from the
+[latest release](https://github.com/oxford-heavy/dmatrix-extensions/releases/latest/download/decide.zip).
 
-It is consumed in three ways:
+The Claude plugin (`claude/dmatrix/`) and the Antigravity bundle (`google/antigravity/dmatrix/`)
+each carry their own copy of the same Skill, so you never install this folder for those.
 
-- **Claude Code plugin** — this repo's root is a Claude plugin that bundles this Skill
-  and wires up the MCP server automatically.
-- **Claude Desktop / claude.ai** — upload this folder (zipped) under Settings → Skills.
-- **Standalone** — copy this folder into `~/.claude/skills/`.
+The Skill is the behavior only: on its own it cannot create or save anything in dMatrix. It needs
+the connection to dMatrix, which each guide sets up:
 
-➡️ **See [`claude/README.md`](../../claude/README.md) for full, step-by-step install
-instructions for all three.**
+- [Claude](../../claude/README.md)
+- [OpenAI (ChatGPT and Codex)](../../openai/README.md)
+- [Google (Antigravity)](../../google/README.md)
 
-> `SKILL.md` is generated from the canonical prompt in the dMatrix monorepo — do not
-> edit it by hand. See the [top-level README](../../README.md#how-it-works).
+> `SKILL.md` is generated from the canonical prompt in the dMatrix repository. Do not edit it by
+> hand. See the [overview](../../README.md).

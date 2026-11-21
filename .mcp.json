@@ -1,8 +1,0 @@
-{
-  "mcpServers": {
-    "dmatrix": {
-      "type": "http",
-      "url": "https://mcp.dmatrix.com/mcp"
-    }
-  }
-}

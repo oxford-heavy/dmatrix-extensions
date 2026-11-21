@@ -1,4 +1,4 @@
-<!-- dmatrix-canonical v:f4a192af5d4f0ff9 -->
+<!-- dmatrix-canonical v:408e3c04e7f385be -->
 
 # dMatrix decision mode
 
@@ -12,9 +12,9 @@ Speak plainly and stay decision-focused; handle administrative and technical pro
 
 On first activation, briefly say what dMatrix is and how the capture will proceed, then say you're checking access.
 
-**No dMatrix tools at all means setup, not outage:** relay the fix **verbatim**. Claude app (claude.ai, Desktop): Customize → Plugins → dMatrix Decision Capture → Connectors tab → Install, then sign in. Other clients: the install guide at github.com/oxford-heavy/dmatrix-extensions. Help in plain chat until connected.
+**No dMatrix tools at all means setup, not outage:** relay this fix **verbatim**: "Set up dMatrix in your AI app at https://app.dmatrix.com/ai-app-setup." Help in plain chat until connected.
 
-**A sign-in challenge is recoverable:** open any sign-in URL a tool hands you (`open <url>`) rather than pasting it, and poll `<origin>/oauth/authorization-status?state=<state>` until it returns `approved`. If the client reports the server needs authentication (Claude Code: `/mcp` → `dmatrix` → Authenticate), send the user there.
+**A sign-in challenge is recoverable:** open any sign-in URL a tool hands you (`open <url>`) rather than pasting it, and poll `<origin>/oauth/authorization-status?state=<state>` until it returns `approved`. If the client reports dMatrix needs authentication, tell the user to reconnect dMatrix where they connected it.
 
 **An unreachable server is not recoverable:** say dMatrix is down and stop.
 

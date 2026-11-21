@@ -1,159 +1,100 @@
-# dMatrix Decision Capture — OpenAI (ChatGPT & Codex)
+# dMatrix Decision Capture — OpenAI (ChatGPT and Codex)
 
-As of the July 2026 release, **OpenAI runs one stack.** The Codex app merged into the
-**ChatGPT desktop app** — Chat, Work, and Codex are now modes inside a single app that
-share one **Plugin Directory** (it replaced the old App Directory), and the **Codex CLI**
-reads that same plugin system. So on the desktop app and the CLI, dMatrix is a **single
-plugin install**. The ChatGPT **website** keeps its own point-and-click setup, where you
-add the two pieces individually.
+Set up dMatrix decision capture in ChatGPT. You need a free dMatrix account: create one at
+[dmatrix.com](https://dmatrix.com).
 
-| You're using… | Setup | Jump to | Draws cards? |
-|---------------|-------|---------|--------------|
-| **ChatGPT desktop app** (Chat / Work / Codex) or the **Codex CLI / IDE** | ✅ One install — the dMatrix plugin bundles both pieces | [Install the plugin](#install-the-plugin) | ✅ The desktop app — the Codex CLI and IDE are text only |
-| **ChatGPT on the web** (chatgpt.com) | Two quick steps — add the **Skill**, then the **MCP server** | [ChatGPT web setup](#chatgpt-on-the-web) | ✅ Yes |
+Setup has two parts, and you need both:
 
-In ChatGPT on the web and the desktop app, dMatrix shows each step as a card in the chat —
-the draft, the matrix, each criterion to score, the analysis — where you tap to score,
-choose, or submit a round's scores. The Codex CLI and IDE get the same steps as text.
+1. **The connection** — dMatrix's tools, added once on chatgpt.com as a custom MCP server.
+2. **The Skill** — the decide Skill, which teaches ChatGPT when to offer a capture and how to
+   draw out options, criteria and scores.
 
-Either way you're setting up the same two parts:
-
-1. **The behavior** — instructions (packaged as the dMatrix **Skill**) that teach the model
-   how to capture a decision as a structured matrix.
-2. **The connection** — the dMatrix **MCP server**, so the model can actually create and
-   save your matrices. With only the behavior, the model offers help it can't deliver.
-
-The plugin bundles both. On the web you add them as two steps — the Skill and the MCP
-server — from the same **Plugins** area in the sidebar. Sign up for a free dMatrix account
-at [dmatrix.com](https://dmatrix.com) before you start.
+With only the Skill, ChatGPT can talk a decision through but cannot create or save anything in
+dMatrix. With only the connection, ChatGPT has the tools but does not know when to offer them.
 
 ---
 
-## Install the plugin
+## 1. Set up dMatrix on chatgpt.com
 
-*(ChatGPT desktop app & Codex CLI/IDE)*
+Do this once, on the ChatGPT website. It covers the website, the desktop app and Codex signed in
+with ChatGPT.
 
-The plugin bundles the decide **Skill** *and* the dMatrix **MCP server** — one install,
-both parts. In a terminal:
+1. Open `chatgpt.com/plugins`. Click **Add**, then **Add custom MCP server**.
+2. Name: `dMatrix`. Server URL: `https://mcp.dmatrix.com/mcp`. Authentication: **OAuth**.
+   Optional icon: [`assets/dmatrix-icon-chatgpt.png`](../assets/dmatrix-icon-chatgpt.png).
+3. Tick **I understand and want to continue**, then click **Create as a plugin**.
+4. Click **Continue to dMatrix**, then **Allow Access** on dMatrix's page.
+5. Download the Skill archive,
+   [`decide.zip`](https://github.com/oxford-heavy/dmatrix-extensions/releases/latest/download/decide.zip).
+   On the **Skills** tab click **Add**, then **Upload from your computer**, and choose
+   `decide.zip`.
+
+## 2. Where it works
+
+One setup covers all three. On the ChatGPT website and in the desktop app, dMatrix shows each step
+as a card in the chat — the draft, the matrix, each criterion to score, the analysis. Codex signed
+in with ChatGPT has the same tools and acts when you ask it to use dMatrix.
+
+## 3. If "Add custom MCP server" is missing
+
+Your workspace has switched custom MCP servers off. Ask a workspace admin to allow them.
+
+## 4. After a dMatrix release that changes its tools
+
+Open the dMatrix plugin on chatgpt.com and click **Refresh**. Until you do, ChatGPT keeps the tool
+list it saved when you created the plugin.
+
+## 5. Codex with an API key
+
+Codex signed in with an API key has no ChatGPT sign-in, so it does not get the plugin from step 1.
+Add the server by command instead:
 
 ```bash
-codex plugin marketplace add oxford-heavy/dmatrix-extensions
-codex plugin add dmatrix@dmatrix-extensions
+codex mcp add dmatrix --url https://mcp.dmatrix.com/mcp
 ```
 
-Prefer menus? Run `/plugins` inside a Codex session, or open the **Plugin Directory** in
-the ChatGPT desktop app, and install from there instead.
+dMatrix acts when asked there. To have Codex offer it on its own in a project, copy
+[`codex/AGENTS.md`](codex/AGENTS.md) into the project's `AGENTS.md`.
 
-- **One install covers the whole app.** Because Chat, Work, and Codex share the desktop
-  app's plugins, installing once makes dMatrix available in every mode. Install from the
-  terminal (or the Plugin Directory), then **restart the ChatGPT app** to pick it up.
-- **Sign in once.** The first time dMatrix connects you'll approve access in the browser
-  (OAuth). If you're ever asked again later, that's normal — just re-approve.
-- **Verify:** `codex mcp list` shows the `dmatrix` server, and `codex plugin list` shows
-  the plugin enabled. A new session offers to capture when you're weighing a decision.
-- **Update later:**
-
-  ```bash
-  codex plugin marketplace upgrade dmatrix-extensions
-  codex plugin add dmatrix@dmatrix-extensions
-  ```
-
-### Manual setup (no plugin)
-
-Prefer explicit local config? The two parts install by hand:
-
-1. **Behavior** — copy [`codex/AGENTS.md`](codex/AGENTS.md) to `~/.codex/AGENTS.md`
-   (global) or `AGENTS.md` in one project's root.
-2. **Connection** — `codex mcp add dmatrix --url https://mcp.dmatrix.com/mcp`, or merge
-   [`codex/config.toml`](codex/config.toml) into `~/.codex/config.toml`.
-
-Codex supports remote streamable-HTTP MCP servers directly — no `mcp-remote` bridge or
-feature flag needed.
+> Use this only if dMatrix is not connected on your account. With both, your client loads dMatrix
+> twice.
 
 ---
 
-## ChatGPT on the web
+## ChatGPT Projects (paste-in)
 
-The website can't install this repo's plugin, so you add the two parts as two steps —
-both from the **Plugins** area. You'll need a **paid plan** (Plus, Pro, Business,
-Enterprise, or Edu); custom plugins and Skills aren't available on Free. On
-Business / Enterprise / Edu, a **workspace admin** may need to turn these on first.
+To keep the behavior inside one Project instead of every chat, put it in the Project's
+instructions: open [`paste-in/dmatrix.md`](paste-in/dmatrix.md), copy the **entire** contents, and
+paste them into the Project's instructions. A Custom GPT's instructions work the same way. The
+connection from step 1 is still needed.
 
-### Part 1 — add the behavior (the decide Skill)
+## Update the Skill
 
-ChatGPT web supports **Skills** — reusable, uploadable workflow packages. The decide Skill
-ships here **pre-packaged with its dMatrix icon and metadata**, so it appears as **dMatrix**
-(with the logo) in the skill picker and triggers proactively when you're weighing a decision.
+On the **Skills** tab, delete `decide`, then upload the new
+[`decide.zip`](https://github.com/oxford-heavy/dmatrix-extensions/releases/latest/download/decide.zip)
+the same way.
 
-1. In the left **sidebar**, click **Plugins**, then open the **Skills** tab in the Plugin
-   Directory.
-2. Click **Create → Upload from your computer**.
-3. Upload **decide.zip** — download it from the
-   [latest release](https://github.com/oxford-heavy/dmatrix-extensions/releases/latest/download/decide.zip)
-   and drop it in. It's already in the shape ChatGPT expects: a top-level `decide/` folder
-   holding `SKILL.md`, `agents/openai.yaml` (the icon + display name), and the `assets/`
-   icons.
-4. ChatGPT scans the upload; once it clears, every chat applies dMatrix decision-capture
-   behavior. (An upload can land as **Needs Review** or **Blocked** — that's ChatGPT's
-   safety scan; approve it from the Skills tab.)
+## Remove
 
-Prefer to build it from a clone? `cd skills && zip -r ../openai/decide.zip decide -x 'decide/README.md'` reproduces the same bundle.
-
-> **Simpler, unbranded alternatives** — these skip the packaged upload, so ChatGPT shows a
-> generic auto-icon instead of the dMatrix logo. Use them if you're on a plan without
-> Skills, or an upload gets blocked:
-> - **Create → Create with editor**, then paste the contents of
->   [`../skills/decide/SKILL.md`](../skills/decide/SKILL.md).
-> - Or put the behavior in a **Project's** custom instructions: open
->   [`paste-in/dmatrix.md`](paste-in/dmatrix.md), copy the **entire** contents, and paste.
->   A single chat (one-off) or a **Custom GPT**'s instructions work too.
-
-### Part 2 — connect to dMatrix (the MCP server)
-
-Adding a custom MCP server needs **Developer mode** (in beta), on a paid plan. On
-Business / Enterprise / Edu an admin enables it first (Workspace Settings → Permissions,
-"custom MCP connectors / Developer mode").
-
-1. **Turn on Developer mode.** Open **Settings → Plugins** and **scroll to the bottom** —
-   toggle on **Developer mode**. *(OpenAI shuffles this label; if it's not there, look
-   under **Settings → Security and login** or **Settings → Connectors**.)*
-2. **Add the server.** In the sidebar, click **Plugins** (or go to `chatgpt.com/plugins`),
-   then click the **+** next to the plugins search bar to create a custom plugin.
-3. **Fill in:**
-   - **Name:** `dMatrix`
-   - **MCP Server URL:** `https://mcp.dmatrix.com/mcp`
-   - **Authentication:** **OAuth.** dMatrix signs you in through your browser and ties the
-     connection to your account. *Don't choose No authentication* — the server needs the
-     sign-in to read or write your matrices.
-4. Click **Create.** The new plugin lands under **Drafts**. To use it in a chat, click
-   **+** near the message box, choose **More** (some accounts label this **Developer
-   mode**), and select **dMatrix**.
-
-When dMatrix writes to a matrix (e.g. `create_matrix`, `set_score`), ChatGPT asks you to
-confirm the first time in each conversation — that's expected.
-
-The Skill (Part 1) and the MCP connection (Part 2) are independent: the Skill carries the
-behavior, the MCP server carries the account connection. Set up both — with only one, the
-model can talk about your decision but can't save it (or vice-versa).
+1. **The plugin**: open the dMatrix plugin on chatgpt.com, click **…**, then **Delete plugin**,
+   and confirm.
+2. **The Skill**: delete `decide` on the **Skills** tab.
+3. **The approval**: click **Disconnect** for ChatGPT in dMatrix's
+   [AI App Setup](https://app.dmatrix.com/ai-app-setup).
 
 ---
 
 ## Troubleshooting
 
-- **The model doesn't offer to capture decisions** —
-  - *Plugin:* confirm it's installed and enabled (`codex plugin list`), then start a *new*
-    session (and restart the ChatGPT desktop app if that's where you're working).
-  - *Web:* confirm the Skill finished scanning and is enabled in the **Skills** tab — or,
-    if you used the paste-in, that the instructions were pasted in full into the Project.
-- **The model can't create or save a matrix** — the dMatrix connection isn't active:
-  - *Plugin:* `codex mcp list` should show `dmatrix`. If it's listed but tools are
-    unavailable (or the logs show an OAuth error), reconnect with `codex mcp login dmatrix`
-    and approve in the browser.
-  - *Web:* you need Developer mode on a paid plan, and the dMatrix plugin must be selected
-    in the current chat (**+ → More → dMatrix**).
-- **Can't find Developer mode on the website** — it's beta and paid-plan only. Look under
-  **Settings → Plugins** (scroll to the bottom); on Business / Enterprise / Edu a workspace
-  admin enables it first.
-- **The Skill upload says "Needs Review" or "Blocked"** — ChatGPT scans every uploaded
-  Skill. Open the **Skills** tab to review and approve it; if it stays blocked, use the
-  Project paste-in fallback above.
+- **ChatGPT doesn't offer to capture decisions** — confirm the Skill finished scanning and is
+  enabled on the **Skills** tab, or, if you used the paste-in, that the instructions were pasted
+  in full. Start a new chat and try a clearer decision ("help me choose between A and B on cost
+  and speed").
+- **ChatGPT can't create or save a matrix** — the connection isn't active. Open the dMatrix plugin
+  on chatgpt.com and check it is connected; if it asks you to sign in, connect it again.
+- **A dMatrix tool is missing after a release** — click **Refresh** on the dMatrix plugin (step 4).
+- **The Skill upload says "Needs Review" or "Blocked"** — ChatGPT scans every uploaded Skill.
+  Open the **Skills** tab to review and approve it; if it stays blocked, use the Project paste-in
+  instead.
+- **ChatGPT asks before each change to a matrix** — that's expected: it confirms the first write
+  in each conversation.

@@ -1,177 +1,128 @@
 # dMatrix Decision Capture — Claude
 
-Set up dMatrix decision-capture in any Claude product. Pick the row that matches
-how you use Claude:
+Set up dMatrix decision capture in Claude. You need a free dMatrix account: create one at
+[dmatrix.com](https://dmatrix.com).
 
-| You use… | Jump to | One install or two steps? | Draws cards? |
-|----------|---------|---------------------------|--------------|
-| **Claude Code** (terminal / IDE) | [Claude Code](#claude-code) | **One** — the plugin bundles everything | Text only |
-| **claude.ai** or **Claude Desktop** (the app) | [The Claude app](#the-claude-app-claudeai-and-desktop) | **Two** — install the plugin, then its connector | ✅ Yes |
-| Claude Code, but no marketplace | [Standalone skill](#standalone-skill-advanced) | Two steps | Text only |
+Setup has two parts, and you need both:
 
-In claude.ai and Claude Desktop, dMatrix shows each step as a card in the chat — the draft,
-the matrix, each criterion to score, the analysis — where you tap to score, choose, or
-submit a round's scores. Claude Code gets the same steps as text.
+1. **The connection** — dMatrix's tools, added once to your Claude account as a custom
+   connector. It covers claude.ai, the desktop app's Chat and Code tabs, and Claude Code signed
+   in with your Claude account.
+2. **The plugin** — the decide Skill, which teaches Claude when to offer a capture and how to
+   draw out options, criteria and scores. The plugin carries only the Skill; it adds no
+   connection of its own.
 
-## What you're setting up — two parts, both required
+With only the plugin, Claude can talk a decision through but cannot create or save anything in
+dMatrix. With only the connection, Claude has the tools but does not know when to offer them.
 
-1. **The behavior** — a Skill that teaches Claude how to capture a decision as a
-   structured matrix (when to offer, how to draw out options, criteria, and scores).
-2. **The connection to dMatrix** — linking Claude to your dMatrix account so it can
-   actually create and save your decision matrix.
-
-> **You need both.** With only the behavior, Claude can talk through your decision but
-> can't create or save anything in dMatrix — so it ends up offering to capture decisions
-> it can't deliver. The plugin bundles both parts: in Claude Code one install wires up
-> everything, while the Claude app takes one extra click to install the plugin's
-> connector. The manual and standalone routes add the two parts by hand.
+In claude.ai and the desktop app, dMatrix shows each step as a card in the chat — the draft, the
+matrix, each criterion to score, the analysis. Claude Code gets the same steps as text.
 
 ---
 
-## Claude Code
+## 1. Connect dMatrix to your Claude account
 
-**One install gets you both parts.** The plugin bundles the Skill and wires up the
-dMatrix MCP server automatically.
+Do this once.
 
-In Claude Code, run:
+1. Open **Customize › Connectors**.
+2. Click **+**, then **Add custom connector**.
+3. Name: `dMatrix`. URL: `https://mcp.dmatrix.com/mcp`. Click **Continue**.
+4. Leave Authentication on **Sign in now** and the client on **Use Claude's published
+   identity**. Click **Add**.
+5. On dMatrix's page, click **Allow Access**.
+6. Open **dMatrix** in the connector list. Under **Tool permissions**, set **Interactive tools**
+   to **Always allow**.
 
-```
-/plugin marketplace add oxford-heavy/dmatrix-extensions
-/plugin install dmatrix@dmatrix-extensions
-```
+## 2. Add the plugin
 
-That's it. Start a new conversation and Claude will offer to capture decisions in
-dMatrix. (Prefer a menu? Just run `/plugin` and browse the **Discover** tab.)
+1. Open **Customize › Plugins**.
+2. Click **+ Add**, then **Add marketplace**, then **Add from a repository**.
+3. Paste `https://github.com/oxford-heavy/dmatrix-extensions` in the **URL** box and pick
+   **Use "https://github.com/oxford-heavy/dmatrix-extensions"**. Leave **Sync automatically**
+   on.
+4. Click **Add** on **dMatrix Decision Capture**.
 
-> **Sign in to dMatrix:** the plugin's MCP server registers automatically, and Claude
-> Code notices at startup that it needs authentication. Run `/mcp`, select `dmatrix`,
-> choose **Authenticate**, and complete the browser sign-in — once, then it's cached.
-> Create a free account at [dmatrix.com](https://dmatrix.com).
+The marketplace is `oxford-heavy/dmatrix-extensions`; it holds one plugin, `dmatrix`.
 
-### No terminal? Use the installer
+## 3. Check it
 
-The macOS package on the
-[latest release](https://github.com/oxford-heavy/dmatrix-extensions/releases/latest/download/dmatrix-extensions.pkg)
-does the same thing by double-click: it sets up every AI client on the Mac, shows you what
-it did, and adds a daily check that keeps the plugin current. It's the
-[one-step script](../README.md#one-step-install) in package form — same steps, no terminal.
+Start a new conversation and ask Claude to help you choose between two options. It offers to
+capture the decision in dMatrix.
 
-> **This build is unsigned for now.** macOS will refuse it on the first try: open
-> **System Settings → Privacy & Security**, scroll to the note about
-> dmatrix-extensions.pkg, and click **Open Anyway**. Signed builds are coming.
+## 4. If you cannot add a connector
 
-**To remove everything it installed**, run these in Terminal. The first is deliberately
-_not_ `sudo` — the plugin and the daily check live in your account, which is where it
-needs to look:
+- **Free plan**: Claude allows one custom connector. Remove another connector first, or
+  upgrade.
+- **Team and Enterprise**: an Owner adds the connector for the organization. Each member then
+  connects it under **Customize › Connectors**.
 
-```sh
-"/Library/Application Support/dMatrix/install.sh" --uninstall
-sudo pkgutil --forget com.dmatrix.extensions
-sudo rm -rf "/Library/Application Support/dMatrix"
-```
+## 5. Claude Code with an API key
 
----
+Claude Code signed in with an API key has no Claude account, so it has no account connector.
+Add the plugin and the server by command instead:
 
-## The Claude app (claude.ai and Desktop)
-
-The app supports the **same plugin** as Claude Code — installed from a menu, no
-terminal. One difference from Claude Code: the app installs the plugin's **Skill**
-right away, but its bundled **connector** needs one more click before Claude can
-reach dMatrix.
-
-### Recommended — install the plugin, then its connector
-
-1. Open **Customize → Plugins** from the left sidebar.
-2. Click **Add → Add marketplace → Add from a repository**.
-3. Paste this repository URL, then add it — Claude syncs the marketplace for you:
-   `https://github.com/oxford-heavy/dmatrix-extensions`
-4. Once it's added, open the **Personal** tab to see the available plugins.
-5. Find the **dMatrix Decision Capture** card, click **Install**, and accept the
-   trust prompt.
-6. Last, connect the plugin to dMatrix: open the installed plugin, switch to its
-   **Connectors** tab, click **Install** next to `dmatrix`, and sign in when
-   prompted.
-
-> Step 6 is the classic first-run trap: skip it and `/dmatrix:decide` will load, but
-> Claude will report that the dMatrix tools aren't reachable — the Skill is installed
-> while the connector isn't. The plugin card doesn't flag this; the **Connectors** tab
-> is where the missing half lives.
-
-That's the whole setup. You can manage or remove the plugin anytime under
-**Customize → Plugins**.
-
-> **Staying up to date:** on the marketplace's **⋯** menu, turn on
-> **Sync automatically** (or use **Check for updates**) — new dMatrix releases then
-> surface an **Update** button on the plugin. If you installed dMatrix before
-> v0.14.0 from `lockstride/claude-marketplace`, uninstall that copy and reinstall
-> from this repo's marketplace — the old marketplace no longer lists dMatrix, so
-> updates never reach it.
-
-### Manual — add the two parts by hand
-
-If you'd rather not use a plugin, add the same two parts in **Settings**:
-
-**Part 1 — add the behavior:**
-1. Download **[`decide.zip`](https://github.com/oxford-heavy/dmatrix-extensions/releases/latest/download/decide.zip)**
-   from the latest release — it's already the right shape (the `decide/` folder at the
-   zip's top level with `SKILL.md` inside it). Building from a clone instead? Zip **the
-   folder itself** (`skills/decide/`), *not* the files loose at the root.
-2. In Claude, turn on **Code execution and file creation** under **Settings →
-   Capabilities**, then go to **Customize → Skills** and click **+** to upload the
-   zip. (On Team/Enterprise, an org Owner must enable both under **Organization
-   settings → Skills** first.)
-
-**Part 2 — connect to dMatrix:**
-1. Go to **Customize → Connectors**, click **+**, then **Add custom connector**.
-2. Name it `dMatrix` and enter the URL `https://mcp.dmatrix.com/mcp`.
-3. Click **Add**, then sign in to dMatrix when prompted.
-
-On Team/Enterprise, an Owner must first add it under **Organization settings →
-Connectors**; members then click **Connect** under **Customize → Connectors**.
-
-Both parts are now active in every new conversation.
-
----
-
-## Standalone skill (advanced)
-
-If you want the Skill in Claude Code **without** the marketplace plugin, install the
-two parts by hand:
-
-**Part 1 — add the behavior:**
 ```bash
-cp -R skills/decide ~/.claude/skills/decide
+claude plugin marketplace add oxford-heavy/dmatrix-extensions
 ```
-Claude Code auto-discovers it on the next session. (Use `.claude/skills/` inside a
-project instead, to scope it to one repo.)
 
-**Part 2 — connect to dMatrix:**
+```bash
+claude plugin install dmatrix@dmatrix-extensions
+```
+
 ```bash
 claude mcp add --transport http dmatrix https://mcp.dmatrix.com/mcp
 ```
-Verify with `claude mcp list` (or `/mcp` inside a session).
 
-> The marketplace plugin does both of these for you — prefer it unless you have a
-> reason to install the Skill on its own.
+Then, in Claude Code, run `/mcp`, choose `dmatrix`, and pick **Authenticate** to sign in to
+dMatrix.
+
+> Use this only if dMatrix is not connected on your account. With both, your client loads dMatrix
+> twice.
+
+---
+
+## Update
+
+Open **Customize › Plugins**, click **+ Add**, then **Manage marketplaces**. Click **…** next to
+**dmatrix-extensions**, then **Check for updates**. With **Sync automatically** on, updates also
+arrive by themselves when the repository changes.
+
+Claude Code with an API key:
+
+```bash
+claude plugin marketplace update dmatrix-extensions
+```
+
+```bash
+claude plugin update dmatrix@dmatrix-extensions
+```
+
+## Remove
+
+1. **The plugin**: open **Customize › Plugins**, click **+ Add**, then **Manage marketplaces**.
+   Click **…** next to **dmatrix-extensions**, then **Remove**, and confirm. This also removes
+   dMatrix Decision Capture.
+2. **The connector**: removing the plugin does not remove it. Open **Customize › Connectors**,
+   click **dMatrix**, click **…** next to **Disconnect**, then **Remove**, and confirm.
+3. **The approval**: click **Disconnect** for Claude in dMatrix's
+   [AI App Setup](https://app.dmatrix.com/ai-app-setup). Without this, adding the connector
+   again reuses the old approval and skips dMatrix's page.
 
 ---
 
 ## Troubleshooting
 
-- **Claude doesn't offer to capture decisions** — make sure the Skill is installed
-  (Claude Code: `/plugin` → Installed, or check `~/.claude/skills/`; app plugin:
-  **Customize → Plugins**; app manual: **Customize → Skills**). In Claude Code, a
-  freshly installed plugin loads after `/reload-plugins` or a new session. Try a
-  clearer decision ("help me choose between A and B on cost and speed").
-- **Claude won't create or save a matrix / "dMatrix tools aren't reachable"** — the
-  connection to dMatrix isn't set up. App plugin: open **Customize → Plugins →
-  dMatrix Decision Capture → Connectors** and make sure `dmatrix` is **installed and
-  signed in** — plugin install alone doesn't do this ([step 6](#recommended--install-the-plugin-then-its-connector)).
-  App manual route: **Customize → Connectors** should list `https://mcp.dmatrix.com/mcp`.
-  Claude Code: run `/mcp` and authenticate the `dmatrix` server (or check
-  `claude mcp list`).
-- **Can't add the marketplace or the dMatrix plugin card is missing (app)** — on
-  Team/Enterprise, plugins must be enabled for the org by an Owner first; if the
-  option is missing, ask your admin or use the manual two-part route instead.
-- **"This plugin uses a source type your Claude Code version does not support"** —
-  update Claude Code to the latest version, then re-run the install commands.
+- **Claude doesn't offer to capture decisions** — check the plugin is added under
+  **Customize › Plugins**. In Claude Code, a newly added plugin loads after `/reload-plugins`
+  or in a new session. Try a clearer decision ("help me choose between A and B on cost and
+  speed").
+- **Claude won't create or save a matrix, or says the dMatrix tools aren't reachable** — the
+  connection is missing. **Customize › Connectors** should list **dMatrix** at
+  `https://mcp.dmatrix.com/mcp`, connected. If it says it needs you to sign in, reconnect it
+  there.
+- **Claude asks before every card** — set **Interactive tools** to **Always allow** under the
+  connector's **Tool permissions** (step 6 of the connection).
+- **Can't add the marketplace, or the dMatrix plugin is missing (Team and Enterprise)** —
+  plugins must be enabled for the organization by an Owner first. Ask your admin.
+- **"This plugin uses a source type your Claude Code version does not support"** — update
+  Claude Code to the latest version, then add the marketplace again.

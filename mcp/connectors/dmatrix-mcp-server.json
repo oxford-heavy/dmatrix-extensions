@@ -1,5 +1,0 @@
-{
-  "name": "dmatrix",
-  "transport": "streamable-http",
-  "url": "https://mcp.dmatrix.com/mcp"
-}

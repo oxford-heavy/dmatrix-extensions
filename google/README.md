@@ -24,40 +24,34 @@ antigravity/dmatrix/
 
 ## Before you start
 
-You need the `agy` command and `git` on your PATH.
+You need the `agy` command on your PATH.
 
 ## Install
 
-macOS and Linux:
+The same command on macOS, Linux and Windows:
 
 ```bash
-git clone --depth 1 https://github.com/oxford-heavy/dmatrix-extensions.git ~/.dmatrix-extensions
+agy plugin install https://github.com/oxford-heavy/dmatrix-extensions/tree/main/google/antigravity/dmatrix
 ```
 
-```bash
-agy plugin install ~/.dmatrix-extensions/google/antigravity/dmatrix
-```
+## Connect
 
-Windows (PowerShell):
-
-```powershell
-git clone --depth 1 https://github.com/oxford-heavy/dmatrix-extensions.git "$HOME\.dmatrix-extensions"
-```
-
-```powershell
-agy plugin install "$HOME\.dmatrix-extensions\google\antigravity\dmatrix"
-```
-
-Keep the folder: updates come from it. Restart `agy`; inside a session, `/skills` lists `decide`
-and `/mcp` lists `dmatrix`. The first time dMatrix connects, approve access on dMatrix's page.
+Run `agy`. If it was already running, quit it first so it picks up dMatrix. Ask it about a
+decision — for example, "Help me choose between two job offers." It asks to connect to dMatrix the
+first time: click **Allow Access** on dMatrix's page. Inside a session, `/skills` lists `decide`
+and `/mcp` lists `dmatrix`.
 
 ## Update
 
+Remove it, then install it again:
+
 ```bash
-git -C ~/.dmatrix-extensions pull
+agy plugin uninstall dmatrix
 ```
 
-Then run the install command again.
+```bash
+agy plugin install https://github.com/oxford-heavy/dmatrix-extensions/tree/main/google/antigravity/dmatrix
+```
 
 ## Remove
 
@@ -65,7 +59,7 @@ Then run the install command again.
 agy plugin uninstall dmatrix
 ```
 
-Delete the `~/.dmatrix-extensions` folder, then click **Disconnect** for Antigravity in dMatrix's
+Then click **Disconnect** for Antigravity in dMatrix's
 [AI App Setup](https://app.dmatrix.com/ai-app-setup).
 
 ---

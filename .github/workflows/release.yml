@@ -4,10 +4,11 @@ name: Release
 # packages/canonical-prompt/src/repo-files/workflows/release.yml in the dMatrix monorepo.
 # Edit it there; a change made here is overwritten by the next `pnpm extensions:build`.
 #
-# A `dmatrix--v*` tag (what `claude plugin tag` creates) publishes the decide Skill as
-# decide.zip, the archive ChatGPT's Skill upload takes, with its checksum. The file name is
-# stable and carries no version, because the guides link
-# `releases/latest/download/decide.zip`; the version lives inside the Skill and on the tag.
+# A `dmatrix--v*` tag (what `claude plugin tag` creates) publishes the ChatGPT plugin as
+# dmatrix-chatgpt.zip, the archive chatgpt.com's Upload plugin archive takes, with its
+# checksum. The file name is stable and carries no version, because the guides link
+# `releases/latest/download/dmatrix-chatgpt.zip`; the version lives inside the plugin and
+# on the tag.
 on:
   push:
     tags:
@@ -32,7 +33,7 @@ jobs:
     env:
       # Every file the release publishes besides SHA256SUMS.txt. The checksum step and the
       # publish step both read this one list, so neither can publish a file the other missed.
-      RELEASE_FILES: decide.zip
+      RELEASE_FILES: dmatrix-chatgpt.zip
 
     steps:
       - name: Checkout the tag
@@ -41,16 +42,15 @@ jobs:
           ref: ${{ inputs.tag || github.ref }}
           persist-credentials: false
 
-      # decide.zip has the shape the renderer produces — the decide/ folder at the archive's
-      # top level, README left out — because ChatGPT's Skill upload expects exactly that.
-      # Entry times are normalized so re-running a release on an unchanged Skill produces
-      # the same bytes.
-      - name: Build decide.zip
+      # The archive has the shape the renderer produces: the plugin's one folder at its top
+      # level. Entry times are normalized so re-running a release on an unchanged plugin
+      # produces the same bytes.
+      - name: Build dmatrix-chatgpt.zip
         run: |
           set -eu
           mkdir -p dist
-          find skills/decide -exec touch -t 202001010000 {} +
-          (cd skills && zip -r -X "${GITHUB_WORKSPACE}/dist/decide.zip" decide -x 'decide/README.md')
+          find openai/chatgpt/dmatrix -exec touch -t 202001010000 {} +
+          (cd openai/chatgpt && zip -r -X "${GITHUB_WORKSPACE}/dist/dmatrix-chatgpt.zip" dmatrix)
 
       - name: Write the checksums
         working-directory: dist
@@ -70,13 +70,13 @@ jobs:
           echo "TAG=${tag}" >> "$GITHUB_ENV"
           guides="https://github.com/${GITHUB_REPOSITORY}/blob/${tag}"
           {
-            printf '## The decide Skill\n\n'
-            printf '`decide.zip` is the dMatrix decide Skill as ChatGPT takes it: on the '
-            printf '**Skills** tab click **Add**, then **Upload from your computer**. The '
-            printf 'Skill needs the dMatrix connection on your account; each guide sets it up.\n\n'
+            printf '## The ChatGPT plugin\n\n'
+            printf '`dmatrix-chatgpt.zip` is the dMatrix decide Skill as a ChatGPT plugin: on '
+            printf '**Plugins** click **Add**, then **Upload plugin archive**. The Skill needs '
+            printf 'the dMatrix connection on your account; the OpenAI guide sets up both.\n\n'
             printf 'Check the download against `SHA256SUMS.txt`:\n\n'
             printf '```sh\nshasum -a 256 -c SHA256SUMS.txt\n```\n\n'
-            printf '```powershell\nGet-FileHash decide.zip -Algorithm SHA256\n```\n\n'
+            printf '```powershell\nGet-FileHash dmatrix-chatgpt.zip -Algorithm SHA256\n```\n\n'
             printf '## Guides\n\n'
             printf -- '- [Claude](%s/claude/README.md)\n' "$guides"
             printf -- '- [OpenAI (ChatGPT and Codex)](%s/openai/README.md)\n' "$guides"

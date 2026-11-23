@@ -1,5 +1,5 @@
 <!-- dmatrix-canonical v:408e3c04e7f385be -->
-<!-- dmatrix-plugin v:2.0.1 -->
+<!-- dmatrix-plugin v:2.1.0 -->
 
 # dMatrix decision mode
 

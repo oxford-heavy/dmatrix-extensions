@@ -2,7 +2,7 @@ DMATRIX EXTENSIONS LICENSE
 
 Copyright (c) 2026 Oxford Heavy Industries, LLC. All rights reserved.
 
-dMatrix is a product of Lockstride, a division of Oxford Heavy Industries, LLC
+dMatrix is a product of Oxford Heavy Industries, LLC
 ("Oxford Heavy Industries").
 
 This repository contains the client-side extensions — plugins, skills, prompts,
@@ -33,8 +33,8 @@ Except as expressly permitted in Section 1, you may not:
 
 "dMatrix", "Lockstride", "Oxford Heavy Industries", the dM mark, and the logos
 and icons in this repository (including those under `assets/` and
-`skills/decide/assets/`) are trademarks of Oxford Heavy Industries. They are not
-licensed under this agreement, and no right to use them is granted by
+`openai/chatgpt/dmatrix/`) are trademarks of Oxford Heavy Industries. They are
+not licensed under this agreement, and no right to use them is granted by
 implication, estoppel, or otherwise. You may not use them to identify, brand, or
 promote any product or service other than dMatrix.
 
@@ -63,4 +63,4 @@ INDUSTRIES BE LIABLE FOR ANY CLAIM, DAMAGES, OR OTHER LIABILITY, WHETHER IN AN
 ACTION OF CONTRACT, TORT, OR OTHERWISE, ARISING FROM, OUT OF, OR IN CONNECTION
 WITH THE EXTENSIONS OR THE USE OR OTHER DEALINGS IN THE EXTENSIONS.
 
-Licensing inquiries: hello@lockstride.ai
+Licensing inquiries: legal@dmatrix.com

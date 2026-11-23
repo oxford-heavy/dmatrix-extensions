@@ -1,0 +1,37 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "dmatrix",
+  "version": "2.1.0",
+  "description": "dMatrix decision-capture Skill for Chat-to-Matrix — structured decision matrices from natural conversation",
+  "author": {
+    "name": "Oxford Heavy Industries",
+    "email": "hello@dmatrix.com",
+    "url": "https://dmatrix.com"
+  },
+  "homepage": "https://github.com/oxford-heavy/dmatrix-extensions",
+  "repository": "https://github.com/oxford-heavy/dmatrix-extensions",
+  "license": "LicenseRef-dMatrix-Proprietary",
+  "keywords": [
+    "decision-making",
+    "matrix",
+    "mcp",
+    "decision-capture",
+    "structured-decisions"
+  ],
+  "extensions": {
+    "com.openai": {
+      "interface": {
+        "displayName": "dMatrix Decision Capture",
+        "shortDescription": "Capture decisions as matrices",
+        "longDescription": "Teaches ChatGPT when to offer a decision capture and how to draw out options, criteria and scores. Connect dMatrix on your account to save them.",
+        "developerName": "Oxford Heavy Industries",
+        "category": "Productivity",
+        "capabilities": [],
+        "websiteURL": "https://dmatrix.com",
+        "brandColor": "#3B82F6",
+        "logo": "./assets/logo.png",
+        "composerIcon": "./assets/composer-icon.png"
+      }
+    }
+  }
+}

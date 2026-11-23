@@ -5,25 +5,30 @@ Set up dMatrix decision capture in ChatGPT. You need a free dMatrix account: cre
 
 Setup has two parts, both on chatgpt.com, and you need both:
 
-1. **The Skill** — the decide Skill, which teaches ChatGPT when to offer a capture and how to
-   draw out options, criteria and scores.
-2. **The connection** — dMatrix's tools, added once as a custom MCP server. One connection
-   covers chatgpt.com, the desktop app and Codex signed in with ChatGPT.
+1. **The plugin** — the decide Skill, which teaches ChatGPT when to offer a capture and how to
+   draw out options, criteria and scores. It carries only the Skill; it adds no connection of its
+   own.
+2. **The connection** — dMatrix's tools, added as a custom MCP server.
 
-With only the Skill, ChatGPT can talk a decision through but cannot create or save anything in
+Each is added once and covers chatgpt.com, the desktop app and Codex signed in with ChatGPT.
+
+With only the plugin, ChatGPT can talk a decision through but cannot create or save anything in
 dMatrix. With only the connection, ChatGPT has the tools but does not know when to offer them.
 
 ---
 
-## 1. Add the decision skill
+## 1. Add the plugin
 
 1. Download
-   [`decide.zip`](https://github.com/oxford-heavy/dmatrix-extensions/releases/latest/download/decide.zip).
-2. In ChatGPT, open **Skills**, click **Add**, then **Upload from your computer**. Drop
-   `decide.zip` in the box, or click it and choose the file.
-3. ChatGPT lists it as **dMatrix Decision Capture**.
+   [`dmatrix-chatgpt.zip`](https://github.com/oxford-heavy/dmatrix-extensions/releases/latest/download/dmatrix-chatgpt.zip).
+2. Open [chatgpt.com/plugins](https://chatgpt.com/plugins). Click **Add** at the top right, then
+   **Upload plugin archive**. Drop `dmatrix-chatgpt.zip` in the box, or click **click to upload**
+   and choose the file, then click **Add plugin**.
+3. Click **Install plugin**. ChatGPT lists **dMatrix Decision Capture** under **Installed**.
 
-## 2. Connect dMatrix
+To see it in the ChatGPT desktop app, open **Plugins** there and click **Refresh**.
+
+## 2. Connect your account
 
 Do this once, on the ChatGPT website.
 
@@ -68,18 +73,24 @@ connection from step 2 is still needed.
 
 ## Update
 
-On chatgpt.com, open **Skills**, click **…** on **dMatrix Decision Capture** and choose
-**Delete**, then upload the latest `decide.zip` with **Add › Upload from your computer**. If you
-pasted dMatrix's instructions into a project, paste the latest ones.
+On chatgpt.com, open **Plugins** and click **dMatrix Decision Capture** under **Installed**, then
+**…** and **Upload new version**. Choose the latest `dmatrix-chatgpt.zip`. If you pasted dMatrix's
+instructions into a project, paste the latest ones.
 
-After a dMatrix release that changes its tools, open the dMatrix plugin on chatgpt.com and click
-**Refresh**. Until you do, ChatGPT keeps the tool list it saved when you created the plugin.
+If **dMatrix Decision Capture** is listed under **Skills**, click **…** on it there and choose
+**Delete**, then add the plugin as in step 1.
+
+After a dMatrix release that changes its tools, open the connection on chatgpt.com (**dMatrix**
+under **Installed**) and click **Refresh**. Until you do, ChatGPT keeps the tool list it saved when
+you connected.
 
 ## Remove
 
-1. **The Skill**: in ChatGPT, open **Skills**, click **…** on **dMatrix Decision Capture**,
-   choose **Delete**, then confirm.
-2. **The plugin**: on `chatgpt.com/plugins`, click **dMatrix** under **Installed**, then **…**
+1. **The plugin**: on `chatgpt.com/plugins`, click **dMatrix Decision Capture** under **Installed**,
+   then **…** next to **Settings**. Choose **Delete plugin**, then **Delete plugin** again to
+   confirm. If it is also listed under **Skills**, click **…** on it there, choose **Delete**, then
+   **Delete skill**.
+2. **The connection**: on `chatgpt.com/plugins`, click **dMatrix** under **Installed**, then **…**
    next to **Settings**. Choose **Delete plugin**, then **Delete plugin** again to confirm.
 3. **The approval**: click **Disconnect** for ChatGPT in dMatrix's
    [AI App Setup](https://app.dmatrix.com/ai-app-setup).
@@ -88,16 +99,13 @@ After a dMatrix release that changes its tools, open the dMatrix plugin on chatg
 
 ## Troubleshooting
 
-- **ChatGPT doesn't offer to capture decisions** — confirm the Skill finished scanning and is
-  enabled under **Skills**, or, if you used the paste-in, that the instructions were pasted in
+- **ChatGPT doesn't offer to capture decisions** — confirm **dMatrix Decision Capture** is under
+  **Installed** on **Plugins**, or, if you used the paste-in, that the instructions were pasted in
   full. Start a new chat and try a clearer decision ("help me choose between A and B on cost and
   speed").
-- **ChatGPT can't create or save a matrix** — the connection isn't active. Open the dMatrix plugin
-  on chatgpt.com and check it is connected; if it asks you to sign in, connect it again.
-- **A dMatrix tool is missing after a release** — click **Refresh** on the dMatrix plugin (see
-  Update).
-- **The Skill upload says "Needs Review" or "Blocked"** — ChatGPT scans every uploaded Skill.
-  Open **Skills** to review and approve it; if it stays blocked, use the Project paste-in
-  instead.
+- **ChatGPT can't create or save a matrix** — the connection isn't active. Open **dMatrix** under
+  **Installed** on chatgpt.com and check it is connected; if it asks you to sign in, connect it again.
+- **A dMatrix tool is missing after a release** — click **Refresh** on **dMatrix** under
+  **Installed** (see Update).
 - **ChatGPT asks before each change to a matrix** — that's expected: it confirms the first write
   in each conversation.

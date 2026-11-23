@@ -2,19 +2,19 @@
   "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
   "name": "dmatrix-extensions",
   "owner": {
-    "name": "Lockstride",
-    "email": "hello@lockstride.ai",
-    "url": "https://lockstride.ai"
+    "name": "Oxford Heavy Industries",
+    "email": "hello@dmatrix.com",
+    "url": "https://dmatrix.com"
   },
   "metadata": {
-    "version": "2.0.1",
+    "version": "2.1.0",
     "description": "Single-plugin marketplace for dMatrix Decision Capture — the plugin lives in this repo's claude/dmatrix folder"
   },
   "plugins": [
     {
       "name": "dmatrix",
       "source": "./claude/dmatrix",
-      "version": "2.0.1",
+      "version": "2.1.0",
       "description": "dMatrix decision-capture Skill for Chat-to-Matrix — structured decision matrices from natural conversation",
       "category": "productivity",
       "keywords": [

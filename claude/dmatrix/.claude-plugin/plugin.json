@@ -1,12 +1,12 @@
 {
   "name": "dmatrix",
   "displayName": "dMatrix Decision Capture",
-  "version": "2.0.1",
+  "version": "2.1.0",
   "description": "dMatrix decision-capture Skill for Chat-to-Matrix — structured decision matrices from natural conversation",
   "author": {
-    "name": "Lockstride",
-    "email": "hello@lockstride.ai",
-    "url": "https://lockstride.ai"
+    "name": "Oxford Heavy Industries",
+    "email": "hello@dmatrix.com",
+    "url": "https://dmatrix.com"
   },
   "homepage": "https://github.com/oxford-heavy/dmatrix-extensions",
   "repository": "https://github.com/oxford-heavy/dmatrix-extensions",
